@@ -34,6 +34,8 @@ wheels/
 .env.development.local
 .env.test.local
 .env.production.local
+INTERVIEW_GUIDE.md
+*GUIDE*.md
 
 # Build outputs
 frontend/dist/

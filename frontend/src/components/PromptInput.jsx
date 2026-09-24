@@ -47,12 +47,12 @@ export default function PromptInput({ onGenerate, isLoading }) {
       {/* Hero */}
       <div className="hero">
         <h1 className="hero__title">
-          Study Smarter with{' '}
-          <span className="hero__title-accent">AI</span>
+          Forge Your Knowledge.{' '}
+          <span className="hero__title-accent">Ace Your Prep.</span>
         </h1>
         <p className="hero__subtitle">
-          Turn your study material into an interactive learning experience.
-          Enter a topic, paste your notes, or describe what you want to learn.
+          Drop any topic, paste your messy notes, or throw in an entire syllabus
+          — our AI turns it into flashcards and quizzes you can actually learn from.
         </p>
       </div>
 

@@ -1,0 +1,380 @@
+/* ============================================
+   StudyGen AI — Global Design System
+   ============================================ */
+
+/* ---------- CSS Custom Properties ---------- */
+:root {
+  /* Colors — Dark Theme */
+  --bg-primary: #0a0a1a;
+  --bg-secondary: #111128;
+  --bg-card: #16163a;
+  --bg-card-hover: #1c1c4a;
+  --bg-input: #0e0e26;
+
+  --text-primary: #e8e8f0;
+  --text-secondary: #9b9bb8;
+  --text-muted: #6b6b8a;
+  --text-inverse: #0a0a1a;
+
+  --accent-primary: #6c5ce7;
+  --accent-primary-hover: #7e70f0;
+  --accent-secondary: #00cec9;
+  --accent-glow: rgba(108, 92, 231, 0.3);
+
+  --success: #00b894;
+  --success-bg: rgba(0, 184, 148, 0.12);
+  --error: #e74c6f;
+  --error-bg: rgba(231, 76, 111, 0.12);
+  --warning: #fdcb6e;
+  --warning-bg: rgba(253, 203, 110, 0.12);
+
+  --border: #2a2a52;
+  --border-hover: #3a3a6a;
+  --border-focus: #6c5ce7;
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #6c5ce7 0%, #00cec9 100%);
+  --gradient-card: linear-gradient(145deg, #16163a 0%, #1c1c50 100%);
+  --gradient-hero: linear-gradient(180deg, #0a0a1a 0%, #111138 50%, #0a0a1a 100%);
+  --gradient-glow: radial-gradient(ellipse at 50% 0%, rgba(108, 92, 231, 0.15) 0%, transparent 60%);
+
+  /* Typography */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-xs: 0.75rem;
+  --font-sm: 0.875rem;
+  --font-md: 1rem;
+  --font-lg: 1.125rem;
+  --font-xl: 1.25rem;
+  --font-2xl: 1.5rem;
+  --font-3xl: 2rem;
+  --font-4xl: 2.5rem;
+  --font-5xl: 3.25rem;
+
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --shadow-glow: 0 0 30px rgba(108, 92, 231, 0.2);
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 400ms ease;
+
+  /* Layout */
+  --container-max: 800px;
+  --container-wide: 1100px;
+  --header-height: 64px;
+}
+
+/* ---------- Reset & Base ---------- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- Utility Classes ---------- */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+.container--wide {
+  max-width: var(--container-wide);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* ---------- Typography ---------- */
+h1, h2, h3, h4 {
+  color: var(--text-primary);
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: 0.75rem 1.5rem;
+  font-family: var(--font-family);
+  font-size: var(--font-md);
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  text-decoration: none;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn--primary {
+  background: var(--gradient-primary);
+  color: #fff;
+  box-shadow: var(--shadow-glow);
+}
+
+.btn--primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 0 40px rgba(108, 92, 231, 0.35);
+}
+
+.btn--primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn--secondary {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+
+.btn--secondary:hover:not(:disabled) {
+  background: var(--bg-card-hover);
+  border-color: var(--border-hover);
+}
+
+.btn--success {
+  background: var(--success);
+  color: var(--text-inverse);
+}
+
+.btn--success:hover:not(:disabled) {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.btn--error {
+  background: var(--error);
+  color: #fff;
+}
+
+.btn--error:hover:not(:disabled) {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.btn--sm {
+  padding: 0.5rem 1rem;
+  font-size: var(--font-sm);
+}
+
+.btn--lg {
+  padding: 1rem 2rem;
+  font-size: var(--font-lg);
+}
+
+/* ---------- Cards ---------- */
+.card {
+  background: var(--gradient-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  transition: all var(--transition-normal);
+}
+
+.card:hover {
+  border-color: var(--border-hover);
+}
+
+/* ---------- Badges ---------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  font-size: var(--font-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: var(--radius-full);
+}
+
+.badge--beginner {
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.badge--intermediate {
+  background: var(--warning-bg);
+  color: var(--warning);
+}
+
+.badge--advanced {
+  background: var(--error-bg);
+  color: var(--error);
+}
+
+/* ---------- Progress Bar ---------- */
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background: var(--bg-input);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progress-bar__fill {
+  height: 100%;
+  background: var(--gradient-primary);
+  border-radius: var(--radius-full);
+  transition: width var(--transition-normal);
+}
+
+/* ---------- Form Elements ---------- */
+textarea,
+select {
+  font-family: var(--font-family);
+  font-size: var(--font-md);
+  color: var(--text-primary);
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  transition: border-color var(--transition-fast);
+  width: 100%;
+}
+
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+
+/* ---------- Animations ---------- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+.slide-up {
+  animation: slideUp 0.5s ease forwards;
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-hover);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  :root {
+    --font-5xl: 2.25rem;
+    --font-4xl: 1.75rem;
+    --font-3xl: 1.5rem;
+  }
+
+  .container {
+    padding: 0 var(--space-md);
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --font-5xl: 1.75rem;
+    --font-4xl: 1.5rem;
+    --font-3xl: 1.25rem;
+  }
+}

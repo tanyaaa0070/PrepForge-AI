@@ -1,4 +1,4 @@
-# 🎓 StudyGen AI — Final Deliverables & Interview Mastery Guide
+# 🎓 PrepForge AI — Final Deliverables & Interview Mastery Guide
 
 ---
 

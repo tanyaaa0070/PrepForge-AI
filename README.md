@@ -1,6 +1,7 @@
-# StudyGen AI
+# PrepForge AI
 
-> **AI-Powered Study Assistant** — Convert topics, lecture notes, or interview prep materials into interactive flashcards and quizzes with double-layer JSON validation and intelligent score tracking.
+> **AI-Powered Interactive Study Assistant** (Flam Frontend Internship Assignment)  
+> Convert topics, lecture notes, or interview prep materials into interactive flashcards and quizzes with double-layer JSON validation and intelligent score tracking.
 
 [![Frontend](https://img.shields.io/badge/Frontend-React%20%2B%20Vite%20%2B%20JS-blue)](https://vitejs.dev/)
 [![Backend](https://img.shields.io/badge/Backend-FastAPI%20%2B%20Pydantic-009688)](https://fastapi.tiangolo.com/)
@@ -334,6 +335,26 @@ Generates a structured study set from user input.
 - **LLM Rate Limits**: Free-tier Gemini keys have request quotas per minute (RPM). High-frequency generation requests may encounter temporary rate limit responses.
 - **Session Persistence**: Study sessions currently reside in React memory (`useState`). Refreshing the browser page resets the current session.
 - **Token Input Ceiling**: Inputs are capped at 5,000 characters to prevent excessive context latency on free-tier LLM endpoints.
+
+---
+
+## 🤖 AI Usage Note (Honest Disclosure)
+
+As encouraged in the Flam Candidate Reference Guide:
+- **AI Coding Assistant**: Used Claude / Antigravity AI to scaffold the initial project architecture, draft CSS tokens, design edge-case unit test scenarios for Pydantic schemas, and brainstorm responsive layout techniques.
+- **Model Integration**: The application communicates with **Google Gemini 3.6 Flash** via FastAPI to dynamically generate structured educational content.
+- **Original Code & Architecture**: All state management patterns (`useStudySession` FSM, request ID counter, AbortController race-condition prevention), custom validation logic (`validateResult.js`), and component hierarchy were tailored specifically to satisfy the assignment rubric. I fully understand and can walk through every line of code during the live interview.
+
+---
+
+## ⏱️ Time Spent
+
+Total development time: **~6 hours**
+- **Architecture, JSON Schema & State Design**: ~1.0 hour
+- **React Frontend & CSS Design System**: ~1.5 hours
+- **FastAPI Backend & Gemini Integration**: ~1.0 hour
+- **Double Validation & Error Handling (Stale response, bad shape, empty)**: ~1.5 hours
+- **Testing, Pytest, Node verification & Documentation**: ~1.0 hour
 
 ---
 

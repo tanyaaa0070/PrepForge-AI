@@ -1,0 +1,21 @@
+{
+  "name": "prepforge-ai",
+  "version": "1.0.0",
+  "description": "PrepForge AI - AI-Powered Study Assistant (Flam Frontend Internship Assignment)",
+  "private": true,
+  "scripts": {
+    "start": "npm run start --prefix frontend",
+    "dev": "npm run dev --prefix frontend",
+    "build": "npm run build --prefix frontend"
+  },
+  "keywords": [
+    "react",
+    "fastapi",
+    "gemini-ai",
+    "study-assistant",
+    "flashcards",
+    "quiz"
+  ],
+  "author": "Tanya Singh",
+  "license": "MIT"
+}

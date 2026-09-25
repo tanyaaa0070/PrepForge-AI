@@ -5,7 +5,10 @@
  * Implements AbortController for request cancellation and stale response protection.
  */
 
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const API_BASE = (
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.PROD ? 'https://prepforge-ai-1.onrender.com' : 'http://localhost:8000')
+).replace(/\/+$/, '');
 
 /**
  * Generates a study set by sending the user's input to the backend.

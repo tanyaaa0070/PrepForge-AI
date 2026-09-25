@@ -2,6 +2,7 @@ import os
 import re
 import json
 import logging
+import asyncio
 from typing import Any, Dict
 from dotenv import load_dotenv
 
@@ -18,13 +19,20 @@ logger = logging.getLogger("studygen.ai_service")
 def clean_json_response(raw_text: str) -> str:
     """
     Strips code block wrappers (e.g. ```json ... ```) or whitespace
-    to ensure clean, parseable JSON text.
+    and extracts clean, parseable JSON text.
     """
     text = raw_text.strip()
     # Match markdown code block if present
     match = re.search(r"```(?:json)?\s*([\s\S]*?)\s*```", text)
     if match:
-        return match.group(1).strip()
+        text = match.group(1).strip()
+
+    # Extract outermost JSON object/array to handle partial or trailing wrappers
+    start = text.find("{")
+    end = text.rfind("}")
+    if start != -1 and end != -1 and end > start:
+        return text[start:end + 1].strip()
+
     return text
 
 
@@ -74,10 +82,12 @@ async def generate_study_content(request: GenerateRequest) -> StudySetResponse:
         question_count=request.question_count,
     )
 
-    # Candidate models in order of preference (speed, availability & quota)
+    # Candidate models ordered by active quota availability and performance
     candidate_models = [
-        "gemini-3.5-flash-lite",
         "gemini-3.1-flash-lite",
+        "gemini-3.1-flash-lite-preview",
+        "gemini-3-flash-preview",
+        "gemini-3.5-flash-lite",
         "gemini-3.8-flash",
         "gemini-3.6-flash",
         "gemini-3.5-flash",
@@ -98,9 +108,14 @@ async def generate_study_content(request: GenerateRequest) -> StudySetResponse:
                     "response_mime_type": "application/json",
                 },
             )
-            response = await model.generate_content_async(prompt)
+            # Use asyncio.wait_for with a timeout so exhausted/retrying models fail fast
+            response = await asyncio.wait_for(
+                model.generate_content_async(prompt),
+                timeout=20.0
+            )
             if response and response.text:
                 raw_response_text = response.text
+                logger.info(f"Successfully generated response using model: {model_name}")
                 break
         except Exception as e:
             logger.warning(f"Model {model_name} failed: {e}. Trying next model...")
@@ -108,7 +123,7 @@ async def generate_study_content(request: GenerateRequest) -> StudySetResponse:
             continue
 
     if not raw_response_text:
-        # If async call failed or models failed, try synchronous fallback
+        # If async calls failed or timed out, try synchronous fallback
         for model_name in candidate_models:
             try:
                 model = genai.GenerativeModel(
@@ -119,11 +134,16 @@ async def generate_study_content(request: GenerateRequest) -> StudySetResponse:
                         "response_mime_type": "application/json",
                     },
                 )
-                response = model.generate_content(prompt)
+                response = model.generate_content(
+                    prompt,
+                    request_options={"timeout": 20}
+                )
                 if response and response.text:
                     raw_response_text = response.text
+                    logger.info(f"Successfully generated response using sync fallback model: {model_name}")
                     break
             except Exception as e:
+                logger.warning(f"Sync model {model_name} failed: {e}. Trying next model...")
                 last_error = e
                 continue
 
@@ -154,3 +174,4 @@ async def generate_study_content(request: GenerateRequest) -> StudySetResponse:
         raise ValueError(f"Generated content failed schema validation: {validation_err}")
 
     return validated_response
+

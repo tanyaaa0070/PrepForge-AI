@@ -106,5 +106,31 @@ def test_study_set_response_valid():
     assert res.title == "Python Mastery"
 
 
+def test_clean_json_response_with_trailing_ticks():
+    from ai_service import clean_json_response
+    raw = '{\n  "title": "Test Title"\n}\n``'
+    cleaned = clean_json_response(raw)
+    assert cleaned == '{\n  "title": "Test Title"\n}'
+
+
+def test_clean_json_response_with_markdown_block():
+    from ai_service import clean_json_response
+    raw = '```json\n{"title": "Test"}\n```'
+    cleaned = clean_json_response(raw)
+    assert cleaned == '{"title": "Test"}'
+
+
+def test_ensure_ids_missing_ids():
+    from ai_service import ensure_ids
+    data = {
+        "cards": [{"question": "Q1", "answer": "A1"}],
+        "quiz": [{"question": "Q2"}]
+    }
+    result = ensure_ids(data)
+    assert result["cards"][0]["id"] == "card-1"
+    assert result["quiz"][0]["id"] == "quiz-1"
+
+
 if __name__ == "__main__":
     pytest.main(["-v", __file__])
+

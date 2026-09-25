@@ -89,9 +89,14 @@ async def generate_study_set(request: GenerateRequest):
 
     except RuntimeError as run_err:
         logger.error(f"Upstream AI service error: {run_err}")
+        err_msg = str(run_err)
+        if "quota" in err_msg.lower() or "429" in err_msg:
+            detail = "Gemini API quota exceeded. Please wait a moment before trying again, or check your API key quota."
+        else:
+            detail = f"AI service temporarily unavailable: {err_msg}"
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            detail="AI service is temporarily unavailable or returned an error. Please try again.",
+            detail=detail,
         )
 
     except Exception as e:

@@ -6,6 +6,13 @@ Built with **React + Vite** (frontend), **FastAPI + Pydantic** (backend), and **
 
 ---
 
+## Live Demo
+
+- **Frontend App:** [https://prepforge-ai-omega.vercel.app](https://prepforge-ai-omega.vercel.app)
+- **Backend API (Health Check):** [https://prepforge-ai-1.onrender.com/api/health](https://prepforge-ai-1.onrender.com/api/health)
+
+---
+
 ## Features
 
 - Enter any topic, paste notes, or describe what you want to learn

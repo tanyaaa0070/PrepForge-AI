@@ -27,12 +27,11 @@ app = FastAPI(
 )
 
 # CORS Configuration
-# Assignment requirement: Development allows localhost:5173, production allows FRONTEND_URL.
-# Do NOT permanently use allow_origins=["*"].
-frontend_url = os.getenv("FRONTEND_URL", "http://localhost:5173").rstrip("/")
+frontend_url = os.getenv("FRONTEND_URL", "").rstrip("/")
 allowed_origins: List[str] = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "http://localhost:3000",
 ]
 if frontend_url and frontend_url not in allowed_origins:
     allowed_origins.append(frontend_url)
@@ -40,6 +39,7 @@ if frontend_url and frontend_url not in allowed_origins:
 app.add_middleware(
     CORSMiddleware,
     allow_origins=allowed_origins,
+    allow_origin_regex=r"https://.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
